@@ -1,0 +1,33 @@
+Feature: Thêm item mới vào hệ thống
+
+    Scenario: Thêm item thành công
+        Given người dùng đang ở trang thêm item mới
+        When người dùng nhập tên item là "Item 1"
+        And người dùng chọn loại item là "Loại 1"
+        And người dùng tải lên hình ảnh cho item
+        And người dùng nhấn nút "Thêm item"
+        Then item mới với tên "Item 1", loại "Loại 1" và hình ảnh đã tải lên nên xuất hiện trong danh sách item
+
+    Scenario: Thêm item không thành công do không nhập tên
+        Given người dùng đang ở trang thêm item mới
+        When người dùng để trống tên item
+        And người dùng chọn loại item là "Loại 1"
+        And người dùng tải lên hình ảnh cho item
+        And người dùng nhấn nút "Thêm item"
+        Then thông báo lỗi "Tên item là bắt buộc" nên được hiển thị
+
+    Scenario: Thêm item không thành công do không chọn loại
+        Given người dùng đang ở trang thêm item mới
+        When người dùng nhập tên item là "Item 1"
+        And người dùng không chọn loại item
+        And người dùng tải lên hình ảnh cho item
+        And người dùng nhấn nút "Thêm item"
+        Then thông báo lỗi "Loại item là bắt buộc" nên được hiển thị
+
+    Scenario: Thêm item không thành công do không tải lên hình ảnh
+        Given người dùng đang ở trang thêm item mới
+        When người dùng nhập tên item là "Item 1"
+        And người dùng chọn loại item là "Loại 1"
+        And người dùng không tải lên hình ảnh cho item
+        And người dùng nhấn nút "Thêm item"
+        Then thông báo lỗi "Hình ảnh item là bắt buộc" nên được hiển thị
