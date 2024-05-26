@@ -31,14 +31,12 @@ interface User {
   name: string;
 }
 
-
 interface ItemType {
   name: string;
 }
 
-interface Item {
+export interface Item {
   name: string;
-  type: ItemType;
   imageUrl?: string;
-  itemTypeId: Schema["itemTypes"]["Id"];
+  itemTypeId: string;
 }
