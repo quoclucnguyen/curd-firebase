@@ -1,3 +1,4 @@
+import { useRead } from "@typesaurus/react";
 import {
   Button,
   FloatingBubble,
@@ -13,28 +14,17 @@ import {
 import { AddCircleOutline } from "antd-mobile-icons";
 import dayjs from "dayjs";
 import { ref, uploadBytes } from "firebase/storage";
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useState,
-} from "react";
+import { useCallback, useLayoutEffect, useMemo, useState } from "react";
 import ListItemWithImage from "./components/ListItemWithImage";
-import { db, Item, storage } from "./firebase";
+import { db, storage } from "./firebase";
 
 const App = () => {
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
-  const [items, setItems] = useState<Item[]>([]);
   const [fileList, setFileList] = useState<ImageUploadItem[]>([]);
   const [imageUploadFile, setImageUploadFile] = useState<File | undefined>();
 
-  const getItems = useCallback(() => {
-    db.items.all().then((items) => {
-      setItems(items.map((item) => item.data));
-    });
-  }, []);
+  const [items] = useRead(db.items.all().on);
 
   const onPopupClose = useCallback(() => {
     setVisible(false);
@@ -66,21 +56,19 @@ const App = () => {
         content: `Item "${values.name}" added successfully 🎉`,
         icon: "success",
       });
-      getItems();
+
       onPopupClose();
     },
-    [getItems, imageUploadFile, onPopupClose]
+    [imageUploadFile, onPopupClose]
   );
 
   const itemList = useMemo(
     () =>
-      items.map((item, index) => <ListItemWithImage item={item} key={index} />),
+      items?.map((item, index) => (
+        <ListItemWithImage item={item} key={index} />
+      )),
     [items]
   );
-
-  useEffect(() => {
-    getItems();
-  }, [getItems]);
 
   useLayoutEffect(() => {
     document.documentElement.setAttribute("data-prefers-color-scheme", "dark");
@@ -89,7 +77,11 @@ const App = () => {
   return (
     <>
       <List header="Items">
-        {itemList.length > 0 ? itemList : <List.Item>No items found</List.Item>}
+        {(itemList?.length ?? 0) > 0 ? (
+          itemList
+        ) : (
+          <List.Item>No items found</List.Item>
+        )}
       </List>
       <Popup
         visible={visible}

@@ -1,42 +1,61 @@
-import { Image, ImageViewer, List } from "antd-mobile";
-import { getDownloadURL, ref } from "firebase/storage";
-import { useCallback, useEffect, useState } from "react";
-import { Item, storage } from "../firebase";
+import {Image, ImageViewer, List, SwipeAction} from "antd-mobile";
+import {getDownloadURL, ref} from "firebase/storage";
+import {useCallback, useEffect, useState} from "react";
+import {Typesaurus} from "typesaurus";
+import {db, Item, storage} from "../firebase";
 
-export default function ListItemWIthImage(props: Readonly<{ item: Item }>) {
+export default function ListItemWIthImage(
+  props: Readonly<{ item: Typesaurus.Doc<Item> }>
+) {
   const { item } = props;
 
   const [imageUrl, setImageUrl] = useState<string | undefined>();
   const [visible, setVisible] = useState(false);
 
   const getImageUrl = useCallback(async () => {
-    if (!item.imageUrl) {
+    if (!item.data.imageUrl) {
       return;
     }
 
-    const url = await getDownloadURL(ref(storage, item.imageUrl));
+    const url = await getDownloadURL(ref(storage, item.data.imageUrl));
     setImageUrl(url);
-  }, [item.imageUrl]);
+  }, [item.data.imageUrl]);
 
   useEffect(() => {
     getImageUrl();
   }, [getImageUrl]);
 
+  const actionDeleteClick = useCallback(() => {
+    console.log(item);
+    db.items.remove(item.ref.id);
+  }, [item]);
+
   return (
     <>
-      <List.Item
-        prefix={
-          <Image
-            width={40}
-            height={40}
-            src={imageUrl}
-            onClick={() => setVisible(true)}
-          />
-        }
-        description={item.itemTypeId}
+      <SwipeAction
+        rightActions={[
+          {
+            key: "delete",
+            text: "Delete",
+            color: "danger",
+            onClick: actionDeleteClick,
+          },
+        ]}
       >
-        {item.name}
-      </List.Item>
+        <List.Item
+          prefix={
+            <Image
+              width={40}
+              height={40}
+              src={imageUrl}
+              onClick={() => setVisible(true)}
+            />
+          }
+          description={item.data.itemTypeId}
+        >
+          {item.data.name}
+        </List.Item>
+      </SwipeAction>
 
       {imageUrl && (
         <ImageViewer
