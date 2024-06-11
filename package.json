@@ -17,6 +17,7 @@
     "firebase": "^10.12.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.23.1",
     "typesaurus": "^10.7.0"
   },
   "devDependencies": {
