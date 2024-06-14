@@ -14,11 +14,12 @@
     "@typesaurus/react": "^6.0.1",
     "antd-mobile": "^5.36.0",
     "antd-mobile-icons": "^0.3.0",
-    "firebase": "^10.12.1",
+    "firebase": "^10.12.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.1",
-    "typesaurus": "^10.7.0"
+    "typesaurus": "^10.7.0",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.5",

@@ -1,8 +1,12 @@
-import { useLayoutEffect } from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import MainLayout from "./layouts/main/MainLayout";
-import DashboardPage from "./routes/dashboard/DashboardPage";
-import ItemPage from "./routes/item/ItemPage";
+import React, { Suspense, useLayoutEffect } from "react";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
+const MainLayout = React.lazy(() => import("./layouts/main/MainLayout"));
+const DashboardPage = React.lazy(
+  () => import("./routes/dashboard/DashboardPage")
+);
+const ItemPage = React.lazy(() => import("./routes/item/ItemPage"));
+const LoginPage = React.lazy(() => import("./routes/login/LoginPage"));
 
 const App = () => {
   useLayoutEffect(() => {
@@ -10,6 +14,10 @@ const App = () => {
   }, []);
 
   const router = createBrowserRouter([
+    {
+      path: "login",
+      element: <LoginPage />,
+    },
     {
       path: "/",
       element: <MainLayout />,
@@ -26,7 +34,11 @@ const App = () => {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <Suspense>
+      <RouterProvider router={router} />
+    </Suspense>
+  );
 };
 
 export default App;
