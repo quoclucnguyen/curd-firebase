@@ -1,14 +1,20 @@
-import { getAuth } from "firebase/auth";
-import app from "../../firebase";
-const auth = getAuth(app);
+import { useRead } from "@typesaurus/react/useRead";
+import { useEffect, useState } from "react";
+import ItemWithImage from "../../components/ItemWithImageDrag";
+import { db } from "../../firebase";
 
 const DashboardPage = () => {
-  return (
-    <>
-      <h3>DashboardPage</h3>
-      <p>User: {auth.currentUser?.displayName}</p>
-    </>
-  );
+  const [listDiv, setListDiv] = useState<React.ReactElement[]>([]);
+  const [items] = useRead(db.items.all().on);
+
+  useEffect(() => {
+    setListDiv(
+      items?.map((item, index) => <ItemWithImage item={item} key={index} />) ||
+        []
+    );
+  }, [items]);
+
+  return <div className="example-container">{listDiv.map((item) => item)}</div>;
 };
 
 export default DashboardPage;

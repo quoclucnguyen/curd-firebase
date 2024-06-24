@@ -1,8 +1,8 @@
-import {Image, ImageViewer, List, SwipeAction} from "antd-mobile";
-import {getDownloadURL, ref} from "firebase/storage";
-import {useCallback, useEffect, useState} from "react";
-import {Typesaurus} from "typesaurus";
-import {db, Item, storage} from "../firebase";
+import { Image, ImageViewer, List, SwipeAction } from "antd-mobile";
+import { getDownloadURL, ref } from "firebase/storage";
+import { useCallback, useEffect, useState } from "react";
+import { Typesaurus } from "typesaurus";
+import { Item, db, storage } from "../firebase";
 
 export default function ListItemWIthImage(
   props: Readonly<{ item: Typesaurus.Doc<Item> }>
