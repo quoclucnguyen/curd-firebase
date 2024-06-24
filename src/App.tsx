@@ -1,5 +1,6 @@
 import React, { Suspense, useLayoutEffect } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import "./App.css";
 
 const MainLayout = React.lazy(() => import("./layouts/main/MainLayout"));
 const DashboardPage = React.lazy(
