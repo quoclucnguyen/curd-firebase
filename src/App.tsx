@@ -1,6 +1,8 @@
+import { getAuth } from "firebase/auth";
 import React, { Suspense, useLayoutEffect } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.css";
+import app from "./firebase";
 
 const MainLayout = React.lazy(() => import("./layouts/main/MainLayout"));
 const DashboardPage = React.lazy(
@@ -8,6 +10,8 @@ const DashboardPage = React.lazy(
 );
 const ItemPage = React.lazy(() => import("./routes/item/ItemPage"));
 const LoginPage = React.lazy(() => import("./routes/login/LoginPage"));
+
+getAuth(app);
 
 const App = () => {
   useLayoutEffect(() => {

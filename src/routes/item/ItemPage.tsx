@@ -72,7 +72,7 @@ const ItemPage = () => {
 
   return (
     <>
-      <List header="Items">
+      <List header="Items" className="w-full">
         {(itemList?.length ?? 0) > 0 ? (
           itemList
         ) : (
@@ -139,7 +139,7 @@ const ItemPage = () => {
 
       <FloatingBubble
         style={{
-          "--initial-position-bottom": "24px",
+          "--initial-position-bottom": "100px",
           "--initial-position-right": "24px",
           "--edge-distance": "24px",
         }}

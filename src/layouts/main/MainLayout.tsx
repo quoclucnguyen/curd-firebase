@@ -24,11 +24,7 @@ const Bottom = (props: BottomProps) => {
   return (
     <TabBar activeKey={pathname} onChange={(value) => setRouteActive(value)}>
       <TabBarItem title="Dashboard" key="/" icon={<AppOutline />} />
-      <TabBarItem
-        title="Food Items"
-        key="/food-items"
-        icon={<UnorderedListOutline />}
-      />
+      <TabBarItem title="Items" key="/items" icon={<UnorderedListOutline />} />
       <TabBarItem
         title="Notifications"
         key="/notifications"
