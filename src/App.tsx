@@ -3,6 +3,7 @@ import React, { Suspense, useLayoutEffect } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.css";
 import app from "./firebase";
+import RequireAuth from "./RequireAuth";
 
 const MainLayout = React.lazy(() => import("./layouts/main/MainLayout"));
 const DashboardPage = React.lazy(
@@ -25,7 +26,11 @@ const App = () => {
     },
     {
       path: "/",
-      element: <MainLayout />,
+      element: (
+        <RequireAuth>
+          <MainLayout />
+        </RequireAuth>
+      ),
       children: [
         {
           index: true,
