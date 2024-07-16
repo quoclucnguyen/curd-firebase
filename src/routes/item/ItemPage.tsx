@@ -50,6 +50,8 @@ const ItemPage = () => {
         name: values.name,
         itemTypeId: values.itemTypeId,
         imageUrl: imagePath,
+        x: 0,
+        y: 0,
       });
 
       Toast.show({

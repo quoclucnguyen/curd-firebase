@@ -42,6 +42,15 @@ export default function ItemWithImage(
         increase(1);
       }}
       src={imageUrl}
+      onDragEnd={async (e: PointerEvent) => {
+        console.log(e.x);
+        console.log(e.y);
+        await item.update({
+          x: e.x,
+          y: e.y,
+        });
+      }}
+      initial={{ x: item.data.x, y: item.data.y }}
     />
   );
 }

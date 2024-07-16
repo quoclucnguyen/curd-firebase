@@ -41,4 +41,6 @@ export interface Item {
   name: string;
   imageUrl?: string;
   itemTypeId: string;
+  x: number;
+  y: number;
 }
